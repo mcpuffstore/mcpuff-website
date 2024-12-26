@@ -1,0 +1,597 @@
+:root {
+  --petrol-blue: #1e5866;
+  --sage-green: #a3bfa6;
+  --soft-orange: #ffc685;
+  --light-gray: #f5f5f5;
+  --pure-white: #ffffff;
+  --text-dark: #333333;
+}
+
+/* Base Styles */
+body {
+  background-color: var(--pure-white);
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: var(--pure-white);
+  padding: 4rem 1rem 1rem;
+  min-height: 60vh;
+  display: flex; /* Aggiunto */
+  align-items: center; /* Aggiunto */
+  justify-content: center; /* Aggiunto */
+}
+
+.hero-content {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  width: 100%; /* Aggiunto */
+  max-width: 1200px; /* Aggiunto */
+  margin: 0 auto;
+  text-align: center; /* Aggiunto */
+}
+
+.hero-content.show-hero {
+  opacity: 1;
+  visibility: visible;
+  display: block; /* Aggiunto */
+}
+
+.hero-logo {
+  width: 280px;
+  margin: 0 auto;
+  height: auto;
+  opacity: 0;
+  display: block; /* Aggiunto */
+  transition: opacity 0.3s ease; /* Aggiunto */
+}
+
+.hero-logo.animate-logo {
+  animation: zoomIn 1.5s forwards;
+  opacity: 1; /* Aggiunto */
+}
+
+.hero-text-main,
+.hero-text-emphasis,
+.sub-hero-text {
+  opacity: 0;
+  transform: translateY(20px); /* Aggiunto */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Aggiunto */
+}
+
+.hero-text-main.animate-text,
+.hero-text-emphasis.animate-text,
+.sub-hero-text.animate-text {
+  animation: fadeInUp 1s forwards;
+  opacity: 1; /* Aggiunto */
+  transform: translateY(0); /* Aggiunto */
+}
+
+.hero-text-main {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 1.5rem; /* Aumentato da 2rem */
+  font-weight: 200; /* Font più leggero per un look minimale */
+  margin: 1rem 0;
+  letter-spacing: -1px; /* Spaziatura negativa per un look più moderno */
+  line-height: 1.2;
+  color: var(--text-dark);
+}
+
+.hero-text-emphasis {
+  font-family: "Inter", sans-serif;
+  font-size: 2rem; /* Aumentato da 2.5rem */
+  font-weight: 600; /* Semi-bold invece che bold per bilanciare */
+  color: var(--petrol-blue);
+  margin: 0.5rem 0;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+.sub-hero-text {
+  font-family: "Inter", sans-serif;
+  font-size: 1.4rem; /* Leggermente aumentato */
+  color: #666;
+  margin-top: 1.5rem;
+  font-weight: 300; /* Più leggero per contrasto */
+  letter-spacing: -0.5px;
+}
+
+/* Welcome Text Animation */
+.welcome-text {
+  animation: pulse 2s infinite;
+  position: relative;
+  display: inline-block;
+}
+
+/* Animation Keyframes */
+@keyframes zoomIn {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+/* Gradient Divider */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--petrol-blue) 25%,
+    var(--sage-green) 50%,
+    var(--petrol-blue) 75%,
+    transparent 100%
+  );
+  opacity: 0.7;
+  margin: 0 auto 4rem; /* Modificato qui: rimosso il margin-top */
+  width: 80%;
+  max-width: 1200px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-text-main {
+    font-size: 2.5rem;
+  }
+
+  .hero-text-emphasis {
+    font-size: 3rem;
+  }
+
+  .sub-hero-text {
+    font-size: 1.2rem;
+  }
+
+  .section-divider {
+    width: 90%;
+    margin: 3rem auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text-main {
+    font-size: 2rem;
+  }
+
+  .hero-text-emphasis {
+    font-size: 2.5rem;
+  }
+
+  .sub-hero-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.age-icon {
+  width: 120px;
+  height: auto;
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--petrol-blue);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* Cookie Banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.cookie-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cookie-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-accept {
+  background-color: #2ecc71;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-reject {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+/* Brand Slider */
+.brands-slider {
+  width: 100%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  background: white;
+  padding: 20px 0;
+  margin-bottom: 2rem;
+}
+
+.slide-track {
+  display: flex;
+  width: calc(200px * 21);
+  animation: scroll 35s linear infinite;
+}
+
+.slide {
+  width: 200px;
+  padding: 0 15px;
+  flex-shrink: 0;
+}
+
+.slide img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-200px * 7));
+  }
+}
+
+/* Service Cards */
+.service-card {
+  background: var(--pure-white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Promo Cards */
+.promo-card {
+  background: var(--pure-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.promo-card:hover {
+  transform: translateY(-5px);
+}
+
+.promo-image {
+  width: 100%;
+  aspect-ratio: 2/1;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* FAQ Section */
+.faq-item button {
+  transition: background-color 0.3s ease;
+}
+
+.faq-item button:hover {
+  background-color: var(--light-gray);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  opacity: 0;
+}
+
+.accordion-content.active {
+  max-height: 150px;
+  opacity: 1;
+}
+
+/* Social Media Section */
+.social-cta-section {
+  background: linear-gradient(
+    135deg,
+    var(--petrol-blue) 0%,
+    var(--sage-green) 100%
+  );
+  padding: 2rem;
+  border-radius: 12px;
+  margin-top: 3rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.social-icon-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.social-icon-large i {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.social-icon-large:hover {
+  transform: translateY(-5px);
+  color: var(--soft-orange);
+}
+
+.social-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* Footer */
+.age-restriction-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.age-restriction-image {
+  width: 200px;
+  height: auto;
+  opacity: 0.9;
+}
+
+.contact-social-icon {
+  font-size: 24px;
+  color: var(--pure-white);
+  transition: all 0.3s ease;
+}
+
+.contact-social-icon:hover {
+  color: var(--soft-orange);
+  transform: translateY(-2px);
+}
+
+/* Utility Classes */
+.bg-petrol {
+  background-color: var(--petrol-blue);
+}
+
+.bg-sage {
+  background-color: var(--sage-green);
+}
+
+.bg-soft-orange {
+  background-color: var(--soft-orange);
+}
+
+.text-petrol {
+  color: var(--petrol-blue);
+}
+
+.text-sage {
+  color: var(--sage-green);
+}
+
+.text-soft-orange {
+  color: var(--soft-orange);
+}
+
+/* WhatsApp Button */
+.whatsapp-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366; /* Colore ufficiale WhatsApp */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 999;
+  animation: pulse-whatsapp 2s infinite;
+}
+
+.whatsapp-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-button i {
+  color: white;
+  font-size: 32px;
+}
+
+@keyframes pulse-whatsapp {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .whatsapp-button {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .whatsapp-button i {
+    font-size: 28px;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 640px) {
+  .hero-text {
+    font-size: clamp(16px, 4vw, 18px);
+    padding: 0 0.5rem;
+    line-height: 1.3;
+    margin-top: -5px;
+  }
+
+  .hero-section {
+    padding: 4rem 1rem 0.5rem;
+  }
+
+  .hero-logo {
+    width: 240px;
+  }
+
+  .social-icon-large i {
+    font-size: 2rem;
+  }
+
+  .social-cta-section {
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .age-restriction-image {
+    width: 180px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-logo {
+    width: 350px;
+  }
+
+  .hero-section {
+    padding: 5rem 1rem 2rem;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1024px) {
+  /* Chi Siamo section */
+  #chi-siamo .text-gray-700 {
+    padding-right: 2rem;
+  }
+
+  /* FAQ section */
+  .faq-item {
+    transition: all 0.3s ease;
+  }
+
+  .faq-item:hover {
+    transform: translateX(5px);
+  }
+
+  .accordion-content.active {
+    max-height: 300px; /* Aumentato per contenuti più lunghi */
+  }
+}
+
+/* General improvements */
+.container {
+  max-width: 1440px; /* Aumentato per schermi più larghi */
+}
+
+#chi-siamo,
+#faq {
+  scroll-margin-top: 100px; /* Per la navigazione smooth */
+}
+
+#faq .max-w-4xl {
+  max-width: 900px; /* Ridotto la larghezza massima del contenitore */
+}
+
+.faq-item {
+  margin-bottom: 1rem; /* Aggiunto per spaziatura tra gli elementi */
+}

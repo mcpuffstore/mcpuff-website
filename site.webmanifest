@@ -1,0 +1,14 @@
+{
+    "name": "McPuff Store",
+    "short_name": "McPuff",
+    "icons": [
+        {
+            "src": "https://i.ibb.co/YPTwDSm/Senza-titolo-64-x-64-px.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#1e5866",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}

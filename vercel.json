@@ -3,10 +3,12 @@
   "builds": [
     { "src": "*.html", "use": "@vercel/static" },
     { "src": "*.css", "use": "@vercel/static" },
-    { "src": "*.js", "use": "@vercel/static" }
-    { "src": "sitemap.xml", "use": "@vercel/static" }
+    { "src": "*.js", "use": "@vercel/static" },
+    { "src": "sitemap.xml", "use": "@vercel/static" },
+    { "src": "site.webmanifest", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }

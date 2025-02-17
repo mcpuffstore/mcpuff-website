@@ -10,24 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Funzione per animare la hero section
   function animateHero() {
-    console.log("Animazione hero iniziata"); // Debug
-
-    // Rendi visibile il contenitore hero
+    console.log("Animazione hero iniziata");
     heroContent.classList.add("show-hero");
 
-    // Sequenza di animazioni
     setTimeout(() => {
       heroLogo.classList.add("animate-logo");
-
-      // Anima il primo testo dopo l'animazione del logo
       setTimeout(() => {
         heroTextMain.classList.add("animate-text");
-
-        // Anima il secondo testo
         setTimeout(() => {
           heroTextEmphasis.classList.add("animate-text");
-
-          // Anima il terzo testo
           setTimeout(() => {
             subHeroText.classList.add("animate-text");
           }, 300);
@@ -38,11 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Gestione verifica età
   function handleAgeVerification() {
-    console.log("Verifica età iniziata"); // Debug
     if (!sessionStorage.getItem("ageVerified")) {
       ageModal.style.display = "flex";
     } else {
-      console.log("Età già verificata, avvio animazione"); // Debug
       animateHero();
     }
   }
@@ -57,21 +46,100 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Event Listener per il pulsante di conferma età
+  // Inizializzazione Slider
+  function initializeSlider() {
+    const sliderWrapper = document.querySelector(".slider-wrapper");
+    const dots = document.querySelectorAll(".dot"); // Modificato questo selettore
+    let currentSlide = 0;
+
+    // Debug
+    console.log("Slider wrapper:", sliderWrapper);
+    console.log("Dots:", dots);
+
+    if (!sliderWrapper || !dots.length) {
+      console.log("Slider elements not found");
+      return;
+    }
+
+    function showSlide(index) {
+      console.log("Showing slide:", index); // Debug
+      currentSlide = index;
+      sliderWrapper.style.transform = `translateX(-${index * 33.333}%)`;
+
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add("active");
+        } else {
+          dot.classList.remove("active");
+        }
+      });
+    }
+
+    function nextSlide() {
+      let next = (currentSlide + 1) % dots.length;
+      showSlide(next);
+    }
+
+    // Auto-play
+    let slideInterval = setInterval(nextSlide, 4000);
+
+    function resetInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 4000);
+    }
+
+    // Click handlers
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("Dot clicked:", index); // Debug
+        showSlide(index);
+        resetInterval();
+      });
+    });
+
+    // Touch functionality
+    let touchStartX = 0;
+
+    sliderWrapper.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.touches[0].clientX;
+        clearInterval(slideInterval);
+      },
+      { passive: true }
+    );
+
+    sliderWrapper.addEventListener(
+      "touchend",
+      (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > 50) {
+          if (diff > 0 && currentSlide < dots.length - 1) {
+            showSlide(currentSlide + 1);
+          } else if (diff < 0 && currentSlide > 0) {
+            showSlide(currentSlide - 1);
+          }
+        }
+        resetInterval();
+      },
+      { passive: true }
+    );
+
+    // Start slider
+    showSlide(0);
+  }
+
+  // Event Listeners
   document.getElementById("confirmAge").addEventListener("click", () => {
-    console.log("Età confermata"); // Debug
     sessionStorage.setItem("ageVerified", "true");
     ageModal.style.display = "none";
-
-    // Avvia l'animazione con un piccolo ritardo
-    setTimeout(() => {
-      animateHero();
-    }, 300);
-
+    setTimeout(animateHero, 300);
     handleCookieBanner();
   });
 
-  // Rest of the code remains the same...
   document.getElementById("exitSite").addEventListener("click", () => {
     window.location.href = "https://www.google.com";
   });
@@ -86,48 +154,43 @@ document.addEventListener("DOMContentLoaded", () => {
     cookieBanner.classList.add("hidden");
   });
 
+  // Newsletter Form
+  const form = document.getElementById("newsletter-form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const successMessage = document.getElementById("success-message");
+      const MAILCHIMP_URL = "http://eepurl.com/i6MtF2";
+      const formData = new FormData(form);
+      const email = formData.get("email");
+
+      fetch(MAILCHIMP_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          EMAIL: email,
+          status: "subscribed",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then(() => {
+          form.reset();
+          successMessage.classList.remove("hidden");
+          setTimeout(() => {
+            successMessage.classList.add("hidden");
+          }, 5000);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Si è verificato un errore. Riprova più tardi.");
+        });
+    });
+  }
+
   // Inizializzazione
   handleAgeVerification();
   handleCookieBanner();
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("newsletter-form");
-  const successMessage = document.getElementById("success-message");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Sostituisci con il tuo URL Mailchimp
-    const MAILCHIMP_URL = "http://eepurl.com/i6MtF2";
-
-    const formData = new FormData(form);
-    const email = formData.get("email");
-
-    // Configura i dati per Mailchimp
-    const data = {
-      EMAIL: email,
-      status: "subscribed",
-    };
-
-    fetch(MAILCHIMP_URL, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        form.reset();
-        successMessage.classList.remove("hidden");
-        setTimeout(() => {
-          successMessage.classList.add("hidden");
-        }, 5000);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Si è verificato un errore. Riprova più tardi.");
-      });
-  });
+  initializeSlider();
 });
